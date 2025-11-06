@@ -1,0 +1,65 @@
+<html>
+    <head>
+        <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-LN+7fdVzj6u52u30Kp6M/trliBMCMKTyK833zpbD+pXdCLuTusPj697FH4R/5mcr" crossorigin="anonymous">
+        {% load static %}
+        <link rel="stylesheet" href="{%static 'css/style.css'%}">
+    </head>
+    <body>
+
+        <nav class="navbar navbar-expand-lg bg-body-tertiary">
+            <div class="container-fluid">
+                <div class="collapse navbar-collapse" id="navbarNav">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'listpost'%}">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Search</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="#">Massages</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'createpost'%}">Create</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" href="{% url 'profile' request.user.pk%}">Profile</a>
+                        </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" data-bs-toggle="dropdown" href="#" role="button">more</a>
+                            <ul class="dropdown-menu">
+                                {% if request.user.is_authenticated %}
+                                    <li>
+                                        <form method="post" action="{% url 'logout' %}">
+                                            {% csrf_token %}
+                                            <button type="submit" class = "nav-link">вийти</button>
+                                        </form>
+                                    </li>
+                                {% else %}
+                                    <li>
+                                        <a class = "dropdown-item" href="{% url 'register'%}">зареєструватися</a>
+                                    </li>
+                                    <li>
+                                        <a class = "dropdown-item" href="{% url 'login'%}">ввійти</a>
+                                    </li>
+                                {% endif %}
+                            </ul> 
+                        </li>
+                    </ul>  
+                
+                </div>
+            </div>
+        </nav>
+
+
+
+        <div class="container-fluid" style="padding-left: 20%;">
+            {% block content%}
+                
+
+            
+            {% endblock %}
+        </div>
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js" integrity="sha384-ndDqU0Gzau9qJ1lfW4pNLlhNTkCfHzAVBReH9diLvGRem5+R9g2FzA8ZGN954O5Q" crossorigin="anonymous"></script>
+    </body>
+</html>

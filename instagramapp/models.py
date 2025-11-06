@@ -1,0 +1,24 @@
+from django.db import models
+from django.contrib.auth.models import AbstractUser
+
+# Create your models here.
+class CustomUser(AbstractUser):
+    avatar = models.FileField(upload_to="media/",blank=True)
+    following = models.IntegerField(null=True,blank=True)
+    follower = models.IntegerField(null=True,blank=True)
+
+class Post(models.Model):
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    description = models.TextField()
+    media = models.FileField(upload_to="media/")
+    created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(CustomUser,related_name="likes_db")
+
+class Coment(models.Model):
+    post = models.ForeignKey(Post, on_delete=models.CASCADE)
+    author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    description = models.TextField()
+    media = models.FileField(upload_to="media/")
+    created_at = models.DateTimeField(auto_now_add=True)
+    likes = models.ManyToManyField(CustomUser,related_name="likes_db2")
+    

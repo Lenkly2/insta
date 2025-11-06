@@ -1,0 +1,13 @@
+{% extends  'base.html' %}
+
+{% block content%}
+    {% for i in lp %}
+        <div>
+            <div style="display: flex;"><h4 style="margin-left: 10%;">{{i.author}}</h4><p>{{i.created_at}}</p></div>
+            <img src="{{i.media.url}}" style="width: 45%; margin-left: 10%;"><br>
+            <div style="margin-left: 10%;"><button>like</button><button>comment</button></div>
+            
+            <p style="margin-left: 10%">{{i.description}}</p>
+        </div><br>
+    {% endfor %}
+{% endblock %}
