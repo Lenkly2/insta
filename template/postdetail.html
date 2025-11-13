@@ -1,0 +1,29 @@
+{% extends  'base.html' %}
+
+{% block content%}
+    
+    <img src="{{detailpost.media.url}}" style="width: 40%;">
+    <div>
+        <div style="display: flex;"><img src="{{detailpost.author.avatar.url}}" style="width: 5%;">
+        <h4>{{detailpost.author}}</h4></div>
+        <p>{{detailpost.description}}<br>
+        <span style="color: gray;">{{detailpost.created_at}}</span></p>
+        {{detailpost.likes}}<br>
+        <a href="#">like</a><a href="{% url 'createcoment' detailpost.pk%}">coment</a><br>
+        
+        {% for i in coment%}
+            <div style="display: flex;"><img src="{{detailpost.author.avatar.url}}" style="width: 5%;">
+            <h5>{{i.author}}</h5></div>
+            {% if i.media%}
+                <img src="{{i.media.url}}" style="width: 20%;"><br>
+            {% else %}
+                <p>{{i.description}}</p><br>
+            {% endif %}
+        {% endfor %}
+    </div>
+    
+    
+
+    
+    
+{% endblock %}

@@ -3,11 +3,11 @@
 {% block content%}
     {% for i in lp %}
         <div>
-            <div style="display: flex;"><h4 style="margin-left: 10%;">{{i.author}}</h4><p>{{i.created_at}}</p></div>
+            <div style="display: flex;"><img src="{{i.author.avatar.url}}" style="width: 5%; margin-left: 10%;"><h4 >{{i.author}}</h4><p>{{i.created_at}}</p></div>
             <img src="{{i.media.url}}" style="width: 45%; margin-left: 10%;"><br>
-            <div style="margin-left: 10%;"><button>like</button><button>comment</button></div>
-            
+            <div style="margin-left: 10%;"><a href="#">like</a><a href="{% url 'postdetail' i.pk%}">comment</a></div>
             <p style="margin-left: 10%">{{i.description}}</p>
+            <a href="{% url 'deletepost' i.pk%}">delete</a><a href="{% url 'updatepost' i.pk%}">update</a>
         </div><br>
     {% endfor %}
 {% endblock %}

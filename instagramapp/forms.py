@@ -9,3 +9,12 @@ class PostForm(forms.ModelForm):
             "description": forms.TextInput(attrs={"class": "form-control"}),
             "media": forms.ClearableFileInput(),
         }
+
+class ComentForm(forms.ModelForm):
+    class Meta:
+        model = Coment
+        fields = ["description","media"]
+        widgets = {
+            "description": forms.TextInput(attrs={"class": "form-control"}),
+            "media": forms.ClearableFileInput(),
+        }

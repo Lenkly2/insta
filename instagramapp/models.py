@@ -14,11 +14,16 @@ class Post(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(CustomUser,related_name="likes_db")
 
+    def total_likes(self):
+        return self.likes.count()
+    
 class Coment(models.Model):
     post = models.ForeignKey(Post, on_delete=models.CASCADE)
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     description = models.TextField()
-    media = models.FileField(upload_to="media/")
+    media = models.FileField(upload_to="media/", null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     likes = models.ManyToManyField(CustomUser,related_name="likes_db2")
     
+    def total_likes(self):
+        return self.likes.count()
