@@ -1,7 +1,9 @@
 from django.urls import path
 from django.conf.urls.static import static
 from django.conf import settings
-from .views import CreatePostView,ListPostView, RegisterView,UserLoginView,UserLogoutView,DeletePostView,ProfileDetailView,UserUpdateView,CreateCommentView,DetailPostView,BaseView,UpdatePostView
+from .views import (CreatePostView,ListPostView, RegisterView,UserLoginView,UserLogoutView,DeletePostView,ProfileDetailView,
+                    UserUpdateView,CreateCommentView,DetailPostView,BaseView,UpdatePostView,MassageListView,CreateMassageView,DetailMassageView
+)
 
 urlpatterns = [
     path("home/",BaseView.as_view(),name="basee"),
@@ -12,6 +14,9 @@ urlpatterns = [
     path("<int:pk>/postdetail/",DetailPostView.as_view(),name="postdetail"),
     path("<int:pk>/profile/",ProfileDetailView.as_view(),name="profile"),
     path("<int:pk>/createcoment/",CreateCommentView.as_view(),name="createcoment"),
+    path("massagelist/",MassageListView.as_view(),name="massagelist"),
+    path("createmassage/",CreateMassageView.as_view(),name="createmassage"),
+    path("<int:pk>/detailmassage/",DetailMassageView.as_view(),name="detailmassage"),
     path("login/",UserLoginView.as_view(),name="login"),
     path("logout/",UserLogoutView.as_view(),name="logout"),
     path("register/",RegisterView.as_view(),name="register"),

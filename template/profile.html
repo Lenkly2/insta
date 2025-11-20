@@ -7,5 +7,7 @@
     <h4>{{user.username}}</h4>
     {{user.following}}
     {{user.follower}}<br>
-    <a href="{% url 'usup' user.pk%}">change avatar</a>
+    {% if user == user%}
+        <a href="{% url 'usup' user.pk%}">change avatar</a>
+    {% endif %}
 {% endblock %}

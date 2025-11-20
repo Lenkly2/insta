@@ -1,0 +1,14 @@
+{% extends  'base.html' %}
+
+{% block content%}
+    {% for i in ml %}
+        <div style="display: flex;"><img src="{{ml.by.avatar.url}}" style="width: 5%;"> 
+        <p>{{ml.massage}}</p></div><br>
+    {% endfor %}
+
+    {%for i in ml1 %}
+        <div style="display: flex;"><img src="{{ml1.by.avatar.url}}" style="width: 5%;">
+        <p>{{ml1.massage}}</p></div><br>
+    {% endfor %}
+    
+{% endblock %}

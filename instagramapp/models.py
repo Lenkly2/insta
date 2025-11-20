@@ -27,3 +27,8 @@ class Coment(models.Model):
     
     def total_likes(self):
         return self.likes.count()
+
+class Massage(models.Model):
+    by = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name="by_people")
+    to = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name="to_people")
+    massage = models.TextField()

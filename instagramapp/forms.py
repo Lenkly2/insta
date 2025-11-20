@@ -1,5 +1,5 @@
 from django import forms
-from .models import Post, Coment
+from .models import Post, Coment, Massage
 
 class PostForm(forms.ModelForm):
     class Meta:
@@ -17,4 +17,13 @@ class ComentForm(forms.ModelForm):
         widgets = {
             "description": forms.TextInput(attrs={"class": "form-control"}),
             "media": forms.ClearableFileInput(),
+        }
+
+class MassageForm(forms.ModelForm):
+    class Meta:
+        model = Massage
+        fields = ["to","massage"]
+        to = forms.ChoiceField(choices=Massage.objects.all())
+        widgets = {
+            "massage": forms.TextInput(attrs={"class": "form-control"}),
         }

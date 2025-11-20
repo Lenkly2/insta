@@ -1,0 +1,9 @@
+{% extends  'base.html' %}
+
+{% block content%}
+    {% for i in ml %}
+        <a href="{% url 'detailmassage' i.by.pk%}"><div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
+        <p>{{i.massage}}</p></div></a>
+    {% endfor %}
+    <a href="{% url 'createmassage' %}">send massage</a>
+{% endblock %}
