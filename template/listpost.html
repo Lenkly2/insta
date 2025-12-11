@@ -1,14 +1,18 @@
 {% extends  'base.html' %}
-
+{% load static %}
 {% block content%}
     {% for i in lp %}
-        <div>
-            <div style="display: flex;"><img src="{{i.author.avatar.url}}" style="width: 5%; margin-left: 10%;"><h4 ><a href="{%url 'profile' i.author.id%}">{{i.author}}</a></h4><p style="margin-left: 0.5%;">{{i.created_at|timesince}} ago</p></div>
-            <img src="{{i.media.url}}" style="width: 45%; margin-left: 10%;"><br>
-            <div style="margin-left: 10%;"><a href="#">like</a><a href="{% url 'postdetail' i.pk%}">comment</a></div>
-            <p style="margin-left: 10%">{{i.description}}</p>
+        <div style="margin-left: 10%;">
+            <div style="display: flex;"><img src="{{i.author.avatar.url}}" style="width: 5%; "><h4 ><a href="{%url 'profile' i.author.id%}" class="lista">{{i.author}}</a></h4><p style="margin-left: 0.5%;">{{i.created_at|timesince}} ago</p></div>
+            <img src="{{i.media.url}}" style="width: 45%;"><br>
+            {% if request.user.theme == 1%}
+                <div ><a href="#"><img src="{%static 'img/like.png'%}" style="width: 4%;"></a><a href="{% url 'postdetail' i.pk%}"><img src="{%static 'img/coment.png'%}" style="width: 4%;"></a></div>
+            {% else %}
+                <div ><a href="#"><img src="{%static 'img/like-b.png'%}" style="width: 4%;"></a><a href="{% url 'postdetail' i.pk%}"><img src="{%static 'img/coment-b.png'%}" style="width: 4%;"></a></div>
+            {% endif %}
+            <p >{{i.description}}</p>
             {% if user == i.author%}
-                <div style="margin-left: 10%;"><a href="{% url 'deletepost' i.pk%}">delete</a><a href="{% url 'updatepost' i.pk%}">update</a></div>
+                <div ><a href="{% url 'deletepost' i.pk%}">delete</a><a href="{% url 'updatepost' i.pk%}">update</a></div>
             {% endif %}
         </div><br>
     {% endfor %}

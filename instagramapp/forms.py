@@ -27,3 +27,11 @@ class MassageForm(forms.ModelForm):
         widgets = {
             "massage": forms.TextInput(attrs={"class": "form-control"}),
         }
+
+class Massage2Form(forms.ModelForm):
+    class Meta:
+        model = Massage
+        fields = ["massage"]
+        widgets = {
+            "massage": forms.TextInput(attrs={"class": "form-control"}),
+        }

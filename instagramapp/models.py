@@ -6,6 +6,7 @@ class CustomUser(AbstractUser):
     avatar = models.FileField(upload_to="media/",blank=True)
     following = models.IntegerField(null=True,blank=True)
     follower = models.IntegerField(null=True,blank=True)
+    theme = models.BooleanField(blank=True,default=0)
 
 class Post(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)

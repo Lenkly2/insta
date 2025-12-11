@@ -1,12 +1,14 @@
 from django.shortcuts import render, get_object_or_404, redirect
+from django.http import HttpResponse
 from django.views.generic import CreateView, UpdateView, DeleteView, DetailView,ListView, FormView,TemplateView
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
 from .models import Post, Coment, CustomUser, Massage
-from .forms import PostForm,ComentForm, MassageForm
+from .forms import PostForm,ComentForm, MassageForm, Massage2Form
 from django import forms
+from django.db.models import Q
 import datetime
 # Create your views here.
 class BaseView(TemplateView):
@@ -21,7 +23,7 @@ class ListPostView(LoginRequiredMixin, ListView):
 
 class CreatePostView(CreateView):
     model = Post
-    template_name = "createpost.html"
+    template_name = "mcpcreate.html"
     form_class = PostForm
     success_url = reverse_lazy("listpost")
 
@@ -56,7 +58,7 @@ class ProfileDetailView(DetailView):
 
 class CreateCommentView(CreateView):
     model = Coment
-    template_name = "commentcreate.html"
+    template_name = "mcpcreate.html"
     form_class = ComentForm
     success_url = reverse_lazy("listpost")
     
@@ -88,25 +90,35 @@ class UserLogoutView(LogoutView):
 
 class UserUpdateView(UpdateView):
     model = CustomUser
-    template_name = "createpost.html"
+    template_name = "mcpcreate.html"
     fields = ["avatar"]
     success_url = reverse_lazy("profile")
 
 class MassageListView(ListView):
     model = Massage
     template_name = "massagelist.html"
+    context_object_name = "ml"
 
-    def get_context_data(self, **args):
-        context = super().get_context_data(**args)
-        context['ml'] = Massage.objects.filter(to = self.request.user)
-        # context['ml1'] = Massage.objects.filter(by = self.request.user)
-        return context
+    def get_queryset(self):
+        queryset = super().get_queryset()
+        queryset = Massage.objects.filter(Q(by=self.request.user) | Q(to=self.request.user))
+        chat = {}
+        for m in queryset:
+            if m.by == self.request.user:
+                compa = m.to
+            else:
+                compa = m.by
+
+            if compa.id not in chat:
+                chat[compa.id] = m
+
+        return chat.values()
 
 class CreateMassageView(CreateView):
     model = Massage
-    template_name = "massagecreate.html"
+    template_name = "mcpcreate.html"
     form_class = MassageForm
-    success_url = reverse_lazy("listpost")
+    success_url = reverse_lazy("massagelist")
 
     def form_valid(self, form):
         form.instance.by = self.request.user
@@ -119,8 +131,32 @@ class DetailMassageView(DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         context['ml'] = Massage.objects.filter(to = self.request.user)
-        context['ml1'] = Massage.objects.filter(by = self.kwargs['pk'])
+        context['who'] = self.kwargs['pk']
+        context['ml1'] = Massage.objects.filter(by = self.request.user)
         return context
+
+class CreateMassage2View(CreateView):
+    model = Massage
+    template_name = "mcpcreate.html"
+    form_class = Massage2Form
+    success_url = reverse_lazy("massagelist")
+
+    def form_valid(self, form, **kwargs):
+        form.instance.by = self.request.user 
+        form.instance.to = CustomUser.objects.get(pk = self.kwargs['pk'])
+        return super().form_valid(form)
+
+class SearchTemplateView(TemplateView):
+    template_name = "search.html"
+
+def ThemeChange(request,pk):
+    us = CustomUser.objects.get(pk=pk)
+    if us.theme == 0:
+        us.theme = 1
+    else:
+        us.theme = 0
+    us.save()
+    return redirect("listpost")
 
 # def LikesAddView(request, pk):
 #     post = get_object_or_404(Portfolio, id=request.POST.get('like_id'))

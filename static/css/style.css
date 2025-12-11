@@ -3,14 +3,39 @@
     align-items: flex-start;
     position: fixed;
     margin-top: 8%;
+    
 }
 .navbar{
     width: 20%;
     height: 100vh;
     align-items: flex-start;
     position: fixed;
+    color:black;
+    background-color: white;
+    border-right: 1px solid gray;
+
+  
 }
 .navbar-nav{
     font-size: larger;
     line-height: 200%;
+}
+
+
+body{
+  background-color: white;
+  color: black;
+}
+
+.dark-mode{
+  background-color: black;
+  color: white;
+}
+a.dark-mode:hover{ 
+  color: ghostwhite !important;
+}
+
+.lista{
+  color: gray;
+  text-decoration: none;
 }

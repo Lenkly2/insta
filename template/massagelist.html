@@ -2,8 +2,14 @@
 
 {% block content%}
     {% for i in ml %}
-        <a href="{% url 'detailmassage' i.by.pk%}"><div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
+        {%if i.by == request.user%}
+            <a href="{% url 'detailmassage' i.to.pk%}"><div style="display: flex;"><img src="{{i.to.avatar.url}}" style="width: 5%;">
+        {%else%}
+            <a href="{% url 'detailmassage' i.by.pk%}"><div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
+            
+        {% endif%}
         <p>{{i.massage}}</p></div></a>
     {% endfor %}
+    
     <a href="{% url 'createmassage' %}">send massage</a>
 {% endblock %}

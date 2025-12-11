@@ -1,5 +1,5 @@
 {% extends  'base.html' %}
-
+{% load static %}
 {% block content%}
     
     <img src="{{detailpost.media.url}}" style="width: 40%;">
@@ -9,7 +9,7 @@
         <p>{{detailpost.description}}<br>
         <span style="color: gray;">{{detailpost.created_at}}</span></p>
         {{detailpost.likes}}<br>
-        <a href="#">like</a><a href="{% url 'createcoment' detailpost.pk%}">coment</a><br>
+        <a href="#"><img src="{%static 'img/like.png'%}" style="width: 4%;"></a><a href="{% url 'createcoment' detailpost.pk%}"><img src="{%static 'img/coment.png'%}" style="width: 4%;"></a><br>
         
         {% for i in coment%}
             <div style="display: flex;"><img src="{{detailpost.author.avatar.url}}" style="width: 5%;">

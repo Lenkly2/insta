@@ -2,13 +2,19 @@
 
 {% block content%}
     {% for i in ml %}
-        <div style="display: flex;"><img src="{{ml.by.avatar.url}}" style="width: 5%;"> 
-        <p>{{ml.massage}}</p></div><br>
+        {% if i.by.pk == who%}
+            <div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;"> 
+            <p>{{i.massage}}</p></div><br>
+        {% endif %}
+
+        
     {% endfor %}
 
     {%for i in ml1 %}
-        <div style="display: flex;"><img src="{{ml1.by.avatar.url}}" style="width: 5%;">
-        <p>{{ml1.massage}}</p></div><br>
+        {% if i.to.pk == who%}
+            <div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
+            <p>{{i.massage}}</p></div><br>
+        {% endif %}
     {% endfor %}
-    
+    <a href="{% url 'createmassage2' who%}">write</a>
 {% endblock %}
