@@ -5,11 +5,12 @@ from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
-from .models import Post, Coment, CustomUser, Massage
+from .models import Post, Coment, CustomUser, Massage,Subscribers
 from .forms import PostForm,ComentForm, MassageForm, Massage2Form
 from django import forms
 from django.db.models import Q
 import datetime
+
 # Create your views here.
 class BaseView(TemplateView):
     template_name="base.html"
@@ -55,6 +56,15 @@ class ProfileDetailView(DetailView):
     model = CustomUser
     template_name = "profile.html"
     context_object_name = "user"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['sblog'] = Post.objects.filter(author = self.kwargs['pk'])
+        context['folowing'] = Subscribers.objects.filter(follower=self.kwargs['pk'])
+        context['folowing'] = context['folowing'].count()
+        context['folower'] = Subscribers.objects.filter(following=self.kwargs['pk'])
+        context['folower'] = context['folower'].count()
+        return context
 
 class CreateCommentView(CreateView):
     model = Coment
@@ -148,6 +158,15 @@ class CreateMassage2View(CreateView):
 
 class SearchTemplateView(TemplateView):
     template_name = "search.html"
+    
+class SearchListView(ListView):
+    template_name = ""
+
+def USubribe(request,pk):
+    fol = CustomUser.objects.get(pk = pk)
+    us = Subscribers.objects.create(following=fol,follower=request.user)
+    us.save()
+    return redirect("listpost")
 
 def ThemeChange(request,pk):
     us = CustomUser.objects.get(pk=pk)

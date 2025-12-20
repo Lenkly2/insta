@@ -1,7 +1,8 @@
 from django.contrib import admin
-from .models import CustomUser,Post,Coment,Massage
+from .models import CustomUser,Post,Coment,Subscribers, Massage
 # Register your models here.
 admin.site.register(CustomUser)
 admin.site.register(Post)
 admin.site.register(Coment)
 admin.site.register(Massage)
+admin.site.register(Subscribers)

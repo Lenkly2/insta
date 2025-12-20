@@ -4,10 +4,12 @@ from django.contrib.auth.models import AbstractUser
 # Create your models here.
 class CustomUser(AbstractUser):
     avatar = models.FileField(upload_to="media/",blank=True)
-    following = models.IntegerField(null=True,blank=True)
-    follower = models.IntegerField(null=True,blank=True)
     theme = models.BooleanField(blank=True,default=0)
 
+class Subscribers(models.Model):                                                                               
+    following = models.ForeignKey(CustomUser,null=True,blank=True,related_name="folowingdb",on_delete=models.DO_NOTHING)
+    follower = models.ForeignKey(CustomUser,null=True,blank=True,related_name="followerdb",on_delete=models.DO_NOTHING)
+    
 class Post(models.Model):
     author = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
     description = models.TextField()

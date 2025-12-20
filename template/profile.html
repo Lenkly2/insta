@@ -5,9 +5,15 @@
         <img src="{{user.avatar.url}}" style="width: 20%;"><br>
     {% endif %}
     <h4>{{user.username}}</h4>
-    {{user.following}}
-    {{user.follower}}<br>
+    <div style="display: flex;">
+        <p>folowings:</p>{{folowing}}
+        <p style="padding-left: 1%;">folowers:</p>{{folower}}<br>
+    </div>
+    <a href="{% url 'subscribe' user.pk%}">follow</a><br>
     {% if user == user%}
-        <a href="{% url 'usup' user.pk%}">change avatar</a>
+        <a href="{% url 'usup' user.pk%}">change avatar</a><br>
     {% endif %}
+    {% for i in sblog %}
+        <a href="{% url 'postdetail' i.pk%}"><img src="{{i.media.url}}" style="width: 25%;"></a>
+    {% endfor %}
 {% endblock %}
