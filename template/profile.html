@@ -1,17 +1,26 @@
 {% extends  'base.html' %}
 
 {% block content%}
-    {% if user.avatar %}
-        <img src="{{user.avatar.url}}" style="width: 20%;"><br>
-    {% endif %}
-    <h4>{{user.username}}</h4>
-    <div style="display: flex;">
-        <p>folowings:</p>{{folowing}}
-        <p style="padding-left: 1%;">folowers:</p>{{folower}}<br>
-    </div>
-    <a href="{% url 'subscribe' user.pk%}">follow</a><br>
-    {% if user == user%}
-        <a href="{% url 'usup' user.pk%}">change avatar</a><br>
+    <div style="display: flex; margin-left: 20%;">
+        {% if user.avatar %}
+            <img src="{{user.avatar.url}}" style="width: 20%;">
+        {% endif %}
+        <div>
+            <h4>{{user.username}}</h4>
+            <p>{{user.first_name}}</p>
+            <div style="display: flex; column-gap: 10%;">
+                <div style="display: flex; column-gap: 4%;">{{sblogcount}}<p>posts</p></div>
+                <div style="display: flex; column-gap: 4%;">{{folowing}}<p>folowings</p></div>
+                <div style="display: flex; column-gap: 4%;">{{folower}}<p style="padding-left: 1%;">folowers</p></div>
+            </div>
+        </div>
+    </div><br>
+    
+
+    {% if request.user == user%}
+        <a href="{% url 'usup' request.user.pk%}" class="btn btn-secondary" style="margin-left: 20%;">Edit profile</a><br><br>
+    {% else %}
+        <a href="{% url 'subscribe' user.pk%}" class="btn btn-primary" style="margin-left: 20%;">Follow</a><br><br>
     {% endif %}
     {% for i in sblog %}
         <a href="{% url 'postdetail' i.pk%}"><img src="{{i.media.url}}" style="width: 25%;"></a>

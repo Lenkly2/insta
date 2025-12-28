@@ -64,6 +64,7 @@ class ProfileDetailView(DetailView):
         context['folowing'] = context['folowing'].count()
         context['folower'] = Subscribers.objects.filter(following=self.kwargs['pk'])
         context['folower'] = context['folower'].count()
+        context['sblogcount'] = context['sblog'].count()
         return context
 
 class CreateCommentView(CreateView):
@@ -82,7 +83,7 @@ class CustomUserCreatinForm(UserCreationForm):
     avatar = forms.ClearableFileInput()
     class Meta:
         model = CustomUser
-        fields = ["username","avatar","password1", "password2"]
+        fields = ["username","first_name","avatar","password1", "password2"]
 
 class RegisterView(FormView):
     template_name="auth/register.html"
@@ -102,7 +103,11 @@ class UserUpdateView(UpdateView):
     model = CustomUser
     template_name = "mcpcreate.html"
     fields = ["avatar"]
-    success_url = reverse_lazy("profile")
+
+    def get_success_url(self):
+        # str(self.request.user.pk)+"/profile/"
+        return reverse_lazy("profile",args=[self.request.user.pk])
+    # success_url = reverse_lazy("profile",pk=b)
 
 class MassageListView(ListView):
     model = Massage
@@ -158,14 +163,25 @@ class CreateMassage2View(CreateView):
 
 class SearchTemplateView(TemplateView):
     template_name = "search.html"
-    
+
 class SearchListView(ListView):
-    template_name = ""
+    model = Post
+    template_name = "listpost.html"
+    context_object_name = 'lp'
+    def get_queryset(self):
+        sin = self.request.GET.get('searchinput')
+        data = Post.objects.filter(description__icontains=sin)
+        return data
+    
 
 def USubribe(request,pk):
     fol = CustomUser.objects.get(pk = pk)
-    us = Subscribers.objects.create(following=fol,follower=request.user)
-    us.save()
+    prot = Subscribers.objects.get(following=fol,follower=request.user)
+    if prot:
+        pass
+    else:
+        us = Subscribers.objects.create(following=fol,follower=request.user)
+        us.save()
     return redirect("listpost")
 
 def ThemeChange(request,pk):
