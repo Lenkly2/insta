@@ -3,8 +3,22 @@
 {% block content%}
     {% for i in ml %}
         {% if i.by.pk == who%}
-            <div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;"> 
-            <p>{{i.massage}}</p></div><br>
+            {% if i.sppk %}
+            <br><br>
+            <div>
+                <a href="{% url 'postdetail' i.sppk.pk%}"><div style="display: flex;"><img src="{{i.sppk.avatar.url}}" style="width: 5%;"> 
+                <p>{{i.sppk.author}}</p></div>
+                <img src="{{i.sppk.media.url}}" style="width: 20%;"></a>
+                <p>{{i.sppk.description}}</p>
+            </div><br>
+            {% else %}
+                <div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;"> 
+                <p>{{i.massage}}</p></div><br>
+                {% if i.media%}
+                    <img src="{{i.media.url}}" style="width: 20%;"><br>
+                {% endif %}
+            {% endif%}
+            
         {% endif %}
 
         
@@ -12,8 +26,22 @@
 
     {%for i in ml1 %}
         {% if i.to.pk == who%}
-            <div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
-            <p>{{i.massage}}</p></div><br>
+            {% if i.sppk %}
+            <br><br>
+            <div>
+                <a href="{% url 'postdetail' i.sppk.pk%}"><div style="display: flex;"><img src="{{i.sppk.author.avatar.url}}" style="width: 5%;">
+                <p>{{i.sppk.author}}</p></div>
+                <img src="{{i.sppk.media.url}}" style="width: 20%;"></a>
+                <p>{{i.sppk.description}}</p>
+            </div><br>    
+            {% else %}
+                <div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
+                <p>{{i.massage}}</p></div><br>
+                {% if i.media%}
+                    <img src="{{i.media.url}}" style="width: 20%;"><br>
+                {% endif %}
+            {% endif%}
+            
         {% endif %}
     {% endfor %}
     <a href="{% url 'createmassage2' who%}">write</a>

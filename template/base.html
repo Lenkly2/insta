@@ -30,8 +30,8 @@
                 var element = document.getElementsByClassName("navbar");
                 element[0].classList.add("bg-body-tertiary");
                 element[0].classList.remove("dark-mode");
-                var element = document.getElementsByClassName("nav-link");
 
+                var element = document.getElementsByClassName("nav-link");
                 for(i in element){
                     element[i].classList.remove("dark-mode")
                 }
@@ -76,7 +76,12 @@
                                     <li>
                                         <form method="post" action="{% url 'logout' %}">
                                             {% csrf_token %}
-                                            <button type="submit" class = "nav-link">вийти</button>
+                                            {% if request.user.theme == 1%}
+                                                <button type="submit" class = "nav-link dark-mode" >вийти</button>
+                                            {%else%}
+                                                <button type="submit" class = "nav-link">вийти</button>
+                                            {% endif%}
+                                            
                                         </form>
                                     </li>
                                 {% else %}

@@ -35,3 +35,5 @@ class Massage(models.Model):
     by = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name="by_people")
     to = models.ForeignKey(CustomUser, on_delete=models.DO_NOTHING, related_name="to_people")
     massage = models.TextField()
+    media = models.FileField(upload_to="media/", null=True, blank=True)
+    sppk = models.ForeignKey(Post,blank=True,null=True,on_delete=models.CASCADE)

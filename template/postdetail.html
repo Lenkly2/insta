@@ -10,9 +10,9 @@
         <span style="color: gray;">{{detailpost.created_at}}</span></p>
         {{detailpost.likes}}<br>
         {% if request.user.theme == 1%}
-            <a href="#"><img src="{%static 'img/like.png'%}" style="width: 4%;"></a><a href="{% url 'createcoment' detailpost.pk%}"><img src="{%static 'img/coment.png'%}" style="width: 4%;"></a><br>
+            <a href="#"><img src="{%static 'img/like.png'%}" style="width: 4%;"></a><a href="{% url 'createcoment' detailpost.pk%}"><img src="{%static 'img/coment.png'%}" style="width: 4%;"></a><a href="{% url 'sendpm' detailpost.pk%}"><img src="{%static 'img/send.png'%}" style="width: 4%;"></a><br>
         {% else %}
-            <a href="#"><img src="{%static 'img/like-b.png'%}" style="width: 4%;"></a><a href="{% url 'createcoment' detailpost.pk%}"><img src="{%static 'img/coment-b.png'%}" style="width: 4%;"></a><br>
+            <a href="#"><img src="{%static 'img/like-b.png'%}" style="width: 4%;"></a><a href="{% url 'createcoment' detailpost.pk%}"><img src="{%static 'img/coment-b.png'%}" style="width: 4%;"></a><a href="{% url 'sendpm' detailpost.pk%}"><img src="{%static 'img/send-b.png'%}" style="width: 4%;"></a><br>
         {% endif %}
         {% for i in coment%}
             <div style="display: flex;"><img src="{{detailpost.author.avatar.url}}" style="width: 5%;">

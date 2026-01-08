@@ -6,7 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.views import LogoutView, LoginView
 from django.urls import reverse_lazy
 from .models import Post, Coment, CustomUser, Massage,Subscribers
-from .forms import PostForm,ComentForm, MassageForm, Massage2Form
+from .forms import PostForm,ComentForm, MassageForm, Massage2Form, PMForm
 from django import forms
 from django.db.models import Q
 import datetime
@@ -134,7 +134,12 @@ class CreateMassageView(CreateView):
     template_name = "mcpcreate.html"
     form_class = MassageForm
     success_url = reverse_lazy("massagelist")
-
+    
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+        
     def form_valid(self, form):
         form.instance.by = self.request.user
         return super().form_valid(form)
@@ -173,15 +178,31 @@ class SearchListView(ListView):
         data = Post.objects.filter(description__icontains=sin)
         return data
     
+class SendPMView(CreateView):
+    model = Massage
+    form_class = PMForm
+    template_name = "mcpcreate.html"
+    success_url = reverse_lazy("listpost")
 
+    def get_form_kwargs(self):
+        kwargs = super().get_form_kwargs()
+        kwargs['user'] = self.request.user
+        return kwargs
+    
+    def form_valid(self, form, **kwargs):
+        form.instance.by = self.request.user 
+        form.instance.sppk = Post.objects.get(pk=self.kwargs["pk"])
+        return super().form_valid(form)
+    
 def USubribe(request,pk):
     fol = CustomUser.objects.get(pk = pk)
-    prot = Subscribers.objects.get(following=fol,follower=request.user)
-    if prot:
-        pass
-    else:
+    try:
+        prot = Subscribers.objects.get(following=fol,follower=request.user)
+    except:
         us = Subscribers.objects.create(following=fol,follower=request.user)
         us.save()
+
+        
     return redirect("listpost")
 
 def ThemeChange(request,pk):

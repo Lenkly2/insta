@@ -3,7 +3,7 @@ from django.conf.urls.static import static
 from django.conf import settings
 from .views import (CreatePostView,ListPostView, RegisterView,UserLoginView,UserLogoutView,DeletePostView,ProfileDetailView,
                     UserUpdateView,CreateCommentView,DetailPostView,BaseView,UpdatePostView,MassageListView,CreateMassageView,DetailMassageView,CreateMassage2View,
-                    SearchTemplateView,ThemeChange,SearchListView,USubribe
+                    SearchTemplateView,ThemeChange,SearchListView,USubribe,SendPMView
 )
 # 
 urlpatterns = [
@@ -22,6 +22,7 @@ urlpatterns = [
     path("<int:pk>/detailmassage/",DetailMassageView.as_view(),name="detailmassage"),
     path("search/",SearchTemplateView.as_view(),name="searchmain"),
     path("search2/",SearchListView.as_view(),name="search"),
+    path("<int:pk>/send/",SendPMView.as_view(),name="sendpm"),
     path("<int:pk>/cgtheme/",ThemeChange,name="cgtheme"),
     path("login/",UserLoginView.as_view(),name="login"),
     path("logout/",UserLogoutView.as_view(),name="logout"),
