@@ -21,7 +21,6 @@ class ListPostView(LoginRequiredMixin, ListView):
     template_name="listpost.html"
     context_object_name="lp"
 
-
 class CreatePostView(CreateView):
     model = Post
     template_name = "mcpcreate.html"
@@ -40,6 +39,8 @@ class DetailPostView(DetailView):
     def get_context_data(self, **args):
         context = super().get_context_data(**args)
         context['coment'] = Coment.objects.filter(post = self.object)
+        post_id = Post.objects.get(pk = self.kwargs['pk'])
+        context['likes'] = post_id.total_likes()
         return context
     
 class DeletePostView(DeleteView):
@@ -214,7 +215,11 @@ def ThemeChange(request,pk):
     us.save()
     return redirect("listpost")
 
-# def LikesAddView(request, pk):
-#     post = get_object_or_404(Portfolio, id=request.POST.get('like_id'))
-#     post.likes.add(request.user)
-#     return redirect("port_list")
+def LikesAddView(request, pk):
+    post = Post.objects.get(pk=pk)
+    b = post.likes.contains(request.user)
+    if b:
+        pass
+    else:
+        post.likes.add(request.user)
+    return redirect("listpost")

@@ -6,9 +6,9 @@
             <div style="display: flex;"><img src="{{i.author.avatar.url}}" style="width: 5%; "><h4 ><a href="{%url 'profile' i.author.id%}" class="lista">{{i.author}}</a></h4><p style="margin-left: 0.5%;">{{i.created_at|timesince}} ago</p></div>
             <img src="{{i.media.url}}" style="width: 45%;"><br>
             {% if request.user.theme == 1%}
-                <div ><a href="#"><img src="{%static 'img/like.png'%}" style="width: 4%;"></a><a href="{% url 'postdetail' i.pk%}"><img src="{%static 'img/coment.png'%}" style="width: 4%;"></a><a href="{% url 'sendpm' i.pk%}"><img src="{%static 'img/send.png'%}" style="width: 4%;"></a></div>
+                <div ><a href="{% url 'like' i.pk%}"><img src="{%static 'img/like.png'%}" style="width: 4%;"></a><a href="{% url 'postdetail' i.pk%}"><img src="{%static 'img/coment.png'%}" style="width: 4%;"></a><a href="{% url 'sendpm' i.pk%}"><img src="{%static 'img/send.png'%}" style="width: 4%;"></a></div>
             {% else %}
-                <div ><a href="#"><img src="{%static 'img/like-b.png'%}" style="width: 4%;"></a><a href="{% url 'postdetail' i.pk%}"><img src="{%static 'img/coment-b.png'%}" style="width: 4%;"></a><a href="{% url 'sendpm' i.pk%}"><img src="{%static 'img/send-b.png'%}" style="width: 4%;"></a></div>
+                <div ><a href="{% url 'like' i.pk%}"><img src="{%static 'img/like-b.png'%}" style="width: 4%;"></a><a href="{% url 'postdetail' i.pk%}"><img src="{%static 'img/coment-b.png'%}" style="width: 4%;"></a><a href="{% url 'sendpm' i.pk%}"><img src="{%static 'img/send-b.png'%}" style="width: 4%;"></a></div>
             {% endif %}
             <p >{{i.description}}</p>
             {% if user == i.author%}
