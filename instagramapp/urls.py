@@ -7,7 +7,7 @@ from .views import (CreatePostView,ListPostView, RegisterView,UserLoginView,User
 )
 # 
 urlpatterns = [
-    path("home/",BaseView.as_view(),name="basee"),
+    path("",BaseView.as_view(),name="basee"),
     path("listpost/",ListPostView.as_view(),name="listpost"),
     path("createpost/",CreatePostView.as_view(),name="createpost"),
     path("<int:pk>/deletepost/",DeletePostView.as_view(),name="deletepost"),

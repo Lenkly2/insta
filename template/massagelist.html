@@ -1,15 +1,29 @@
 {% extends  'base.html' %}
-
+{% load static %}
 {% block content%}
     {% for i in ml %}
-        {%if i.by == request.user%}
-            <a href="{% url 'detailmassage' i.to.pk%}"><div style="display: flex;"><img src="{{i.to.avatar.url}}" style="width: 5%;">
-        {%else%}
-            <a href="{% url 'detailmassage' i.by.pk%}"><div style="display: flex;"><img src="{{i.by.avatar.url}}" style="width: 5%;">
-            
-        {% endif%}
-        <p>{{i.massage}}</p></div></a>
+
+        <div><a href="{% url 'detailmassage' i.to.pk%}" style="text-decoration: none; display: flex;">
+
+            {%if i.by == request.user%}
+                <img src="{{i.to.avatar.url}}" style="width: 5%;">
+            {%else%}
+                {% if i.by.avatar%}
+                    <img src="{{i.by.avatar.url}}" style="width: 5%;">
+                {%endif%}
+            {% endif%} 
+            <div>
+                {% if user.theme == 1%}
+                    <h4 style="color: white;">{{i.to.username}}</h4>
+                    <p style="color: gray;">{{i.massage}}</p>
+                {%else%}
+                    <h4 style="color: black;">{{i.to.username}}</h4>
+                    <p style="color: gray;">{{i.massage}}</p></a>
+                {%endif%}
+            </div>
+        </div><br>
+
     {% endfor %}
     
-    <a href="{% url 'createmassage' %}">send massage</a>
+    <a href="{% url 'createmassage' %}" class="btn btn-secondary">send massage</a>
 {% endblock %}

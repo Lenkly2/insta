@@ -39,8 +39,6 @@ class DetailPostView(DetailView):
     def get_context_data(self, **args):
         context = super().get_context_data(**args)
         context['coment'] = Coment.objects.filter(post = self.object)
-        post_id = Post.objects.get(pk = self.kwargs['pk'])
-        context['likes'] = post_id.total_likes()
         return context
     
 class DeletePostView(DeleteView):
