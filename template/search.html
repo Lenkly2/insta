@@ -3,8 +3,11 @@
 {% block content %}
     <form method="get" action="{% url 'search'%}">
         {% csrf_token %}
-        <input type="text" name="searchinput" placeholder="">
-        <button type="submit">Submit</button>
+        <div style="display: flex;">
+            <input type="text" name="searchinput" placeholder="Search" class="form-control search-input" style="width: 95%;">
+            <button type="submit" class="btn btn-secondary">Submit</button>
+        </div>
+        
     </form>
 
 {% endblock %}

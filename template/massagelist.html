@@ -3,8 +3,12 @@
 {% block content%}
     {% for i in ml %}
 
-        <div><a href="{% url 'detailmassage' i.to.pk%}" style="text-decoration: none; display: flex;">
-
+        <div>
+            {%if i.by == request.user %}
+                <a href="{% url 'detailmassage' i.to.pk%}" style="text-decoration: none; display: flex;">
+            {%else%}
+                <a href="{% url 'detailmassage' i.by.pk%}" style="text-decoration: none; display: flex;">
+            {%endif%}
             {%if i.by == request.user%}
                 <img src="{{i.to.avatar.url}}" style="width: 5%;">
             {%else%}
